@@ -68,15 +68,14 @@
     "demo": "cross-env NODE_ENV=development node -r @swc-node/register && npm run serve",
     "start": "pnpm run demo",
     "build": "pnpm run build:react && pnpm run build:types",
-    "build:react": "NODE_ENV=production node -r @swc-node/register ./node_modules/.bin/webpack --mode production",
-    "build:types": "rm -rf ./build/types && tsc --project tsconfig.types.json && pnpm run remove-css",
-    "remove-css": "replace \"import '[^']+.css';\" '' ./build/**/*.ts",
+    "build:react": "cross-env NODE_ENV=production node -r @swc-node/register && pnpm run webpack --mode production",
+    "build:types": "rm -rf ./build/types && tsc --project tsconfig.temp.types.json && pnpm run remove-css",
+    "remove-css": "replace \"import '[^']+.css';\" ''./build/**/*.ts",
     "github": "pnpm run git && git push --tags origin HEAD:main",
     "git": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/jodit/jodit-react/releases/tag/$npm_package_version \" && git tag $npm_package_version",
     "test": "jest",
     "serve": "webpack serve --config ./examples/webpack.config.js --mode development",
     "webpack": "webpack --config ./webpack.config.js --mode production"
-
   },
   "repository": {
     "type": "git",
