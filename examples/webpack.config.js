@@ -1,7 +1,7 @@
-import path from 'node:path';
-import process from 'node:process';
-
-export default {
+const path = require('node:path');
+const process = require('node:process');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = {
 	entry: './app.tsx',
 	context: path.join(process.cwd(), './examples/'),
 	devtool: 'eval',
@@ -24,11 +24,14 @@ export default {
 		extensions: ['.js', '.jsx', '.ts', '.tsx']
 	},
 
-	output: {
-		path: path.join(process.cwd(), './examples/build/'),
-		filename: 'app.js'
-	},
+	plugins: [
+		new HtmlWebpackPlugin({ template: 'index.html' })
+	  ],
 
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		filename: 'app.js',
+	},
 	devServer: {
 		static: './examples',
 		open: true,
@@ -41,3 +44,5 @@ export default {
 		hot: true
 	}
 };
+
+module.exports = config;
